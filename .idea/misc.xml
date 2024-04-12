@@ -11,6 +11,9 @@
         <option value="$PROJECT_DIR$/gulimall-ware/pom.xml" />
         <option value="$PROJECT_DIR$/gulimall-coupon/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/renren-generator/pom.xml" />
+        <option value="$PROJECT_DIR$/gulimall_common/pom.xml" />
+        <option value="$PROJECT_DIR$/gulimall-common/pom.xml" />
       </list>
     </option>
   </component>
