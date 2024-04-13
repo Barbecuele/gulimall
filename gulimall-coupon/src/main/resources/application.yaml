@@ -4,10 +4,10 @@ server:
 spring:
   application:
     name: gulimall-coupon
-  redis:
-    host: 192.168.136.250
-    port: 6379
-    password: 123456
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.136.250:8848
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
