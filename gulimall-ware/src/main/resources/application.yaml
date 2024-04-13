@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: ulimall-ware
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.136.250:8848
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
