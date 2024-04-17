@@ -8,11 +8,15 @@ spring:
         server-addr: 192.168.136.250:8848
     gateway:
       routes:
-        - id: rout1
-          uri: http://www.baidu.com
+        - id: product-route
+          uri: lb://gulimall-product
           predicates:
-            - Query=url, baidu
-        - id: rout2
-          uri: http://www.qq.com
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: admin-route
+          uri: lb://renren-fast
           predicates:
-            - Query=url, qq
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /renren-fast/$\{segment}
