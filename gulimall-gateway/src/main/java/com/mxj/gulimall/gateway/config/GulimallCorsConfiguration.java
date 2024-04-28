@@ -14,18 +14,21 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
  * @description: 跨域配置
  */
 @Configuration
-public class GuliMallCorsConfiguration {
+public class GulimallCorsConfiguration {
 
     @Bean
     public CorsWebFilter corsWebFilter(){
-        //跨域配置信息
-        UrlBasedCorsConfigurationSource corsConfigurationSource = new UrlBasedCorsConfigurationSource();
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
         CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+        //1、配置跨域
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.setAllowCredentials(true);
-        corsConfigurationSource.registerCorsConfiguration("/**",corsConfiguration);
-        return new CorsWebFilter(corsConfigurationSource);
+
+        source.registerCorsConfiguration("/**",corsConfiguration);
+        return new CorsWebFilter(source);
     }
 }
