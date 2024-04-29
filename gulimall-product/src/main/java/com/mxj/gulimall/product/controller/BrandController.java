@@ -6,7 +6,6 @@ import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,21 +61,22 @@ public class BrandController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("product:brand:save")
-    public R save(@Valid @RequestBody BrandEntity brand, BindingResult result) {
+    public R save(@Valid @RequestBody BrandEntity brand) {
         brandService.save(brand);
         Map<String, Object> map = new HashMap<>();
-        if (result.hasErrors()) {
-            //获取校验的错误结果
-            result.getFieldErrors().forEach(s -> {
-                String defaultMessage = s.getDefaultMessage();
-                String field = s.getField();
-                map.put(field, defaultMessage);
-            });
-            return R.error(400, "提交的数据不合法").put("data", map);
-        } else {
-            brandService.save(brand);
-        }
-        return R.ok().put("data", result);
+//        if (result.hasErrors()) {
+//            //获取校验的错误结果
+//            result.getFieldErrors().forEach(s -> {
+//                String defaultMessage = s.getDefaultMessage();
+//                String field = s.getField();
+//                map.put(field, defaultMessage);
+//            });
+//            return R.error(400, "提交的数据不合法").put("data", map);
+//        } else {
+//            brandService.save(brand);
+//        }
+        brandService.save(brand);
+        return R.ok();
     }
 
     /**
