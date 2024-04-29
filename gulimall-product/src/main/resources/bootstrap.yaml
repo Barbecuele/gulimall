@@ -6,4 +6,8 @@ spring:
       config:
         server-addr: 192.168.136.250:8848
         namespace: 0c22968b-1fe2-4e67-be96-aac34523461e
-        group: dev
+        ext-config:
+          - data-id: gulimall-product.yml
+            group: dev
+            refresh: true
+        file-extension: yml

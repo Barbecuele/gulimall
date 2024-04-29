@@ -86,7 +86,6 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
             <version>3.1.4</version>
         </dependency>
-
     </dependencies>
 
     <dependencyManagement>

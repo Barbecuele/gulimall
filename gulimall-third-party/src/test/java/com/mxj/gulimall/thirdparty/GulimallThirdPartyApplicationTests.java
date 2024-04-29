@@ -1,10 +1,7 @@
-package com.mxj.gulimall.product;
+package com.mxj.gulimall.thirdparty;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.gson.Gson;
-import com.mxj.gulimall.product.config.QiNiuYunConfig;
-import com.mxj.gulimall.product.entity.BrandEntity;
-import com.mxj.gulimall.product.service.BrandService;
+import com.mxj.gulimall.thirdparty.config.QiNiuYunConfig;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
@@ -12,44 +9,18 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
-public class GulimallProductApplicationTests {
-
-    @Autowired
-    BrandService brandService;
-
-    @Test
-    public void contextLoads() {
-        BrandEntity brandEntity = new BrandEntity();
-//        brandEntity.setName("华为");
-//        brandEntity.setDescript("华为");
-//        brandService.save(brandEntity);
-//        System.out.println("保存成功");
-//        brandEntity.setBrandId(1L);
-//        brandEntity.setDescript("遥遥领先");
-//        brandEntity.setName("华为p50");
-//        brandService.updateById(brandEntity);
-        //分页查询
-        LambdaQueryWrapper<BrandEntity> brandEntityLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        brandEntityLambdaQueryWrapper.eq(BrandEntity::getBrandId, 1L);
-        BrandEntity entity = brandService.getOne(brandEntityLambdaQueryWrapper);
-        System.out.println(entity);
-
-    }
+class GulimallThirdPartyApplicationTests {
 
     @Autowired
     QiNiuYunConfig qiNiuYunConfig;
 
-    //测试上传本地文件到七牛云
     @Test
-    public void upload() {
+    void contextLoads() {
         //构造一个带指定 Region 对象的配置类
         Configuration cfg = new Configuration(Zone.zone1());
         cfg.resumableUploadAPIVersion = Configuration.ResumableUploadAPIVersion.V2;// 指定分片上传版本
@@ -88,4 +59,5 @@ public class GulimallProductApplicationTests {
         }
 
     }
+
 }
