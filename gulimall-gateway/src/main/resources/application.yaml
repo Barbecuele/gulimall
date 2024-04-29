@@ -19,7 +19,7 @@ spring:
           predicates:
             - Path=/api/thirdparty/**
           filters:
-            - RewritePath=/api/thirdparty/(?<segment>.*), /$\{segment}
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
         - id: admin-route
           uri: lb://renren-fast
           predicates:

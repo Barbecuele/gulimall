@@ -17,21 +17,21 @@ public class QiNiuYunConfig {
     /**
      * 七牛域名domain
      */
-    @Value("${oss.url}")
+    //@Value("${oss.url}")
     private String url;
     /**
      * 七牛ACCESS_KEY
      */
-    @Value("${oss.accessKey}")
+    //@Value("${oss.accessKey}")
     private String accessKey;
     /**.accessKey
      * 七牛SECRET_KEY
      */
-    @Value("${oss.secretKey}")
+    //@Value("${oss.secretKey}")
     private String secretKey;
     /**
      * 七牛空间名
      */
-    @Value("${oss.bucketName}")
+    //@Value("${oss.bucketName}")
     private String bucketName;
 }
