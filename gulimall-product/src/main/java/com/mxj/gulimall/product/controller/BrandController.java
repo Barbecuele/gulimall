@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.mxj.common.validator.group.AddGroup;
+import com.mxj.common.validator.group.UpdateGroup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +20,6 @@ import com.mxj.gulimall.product.service.BrandService;
 import com.mxj.common.utils.PageUtils;
 import com.mxj.common.utils.R;
 
-import javax.validation.Valid;
 
 
 /**
@@ -61,7 +63,7 @@ public class BrandController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("product:brand:save")
-    public R save(@Valid @RequestBody BrandEntity brand) {
+    public R save(@Validated({AddGroup.class}) @RequestBody BrandEntity brand) {
         brandService.save(brand);
         Map<String, Object> map = new HashMap<>();
 //        if (result.hasErrors()) {
@@ -84,7 +86,7 @@ public class BrandController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("product:brand:update")
-    public R update(@RequestBody BrandEntity brand) {
+    public R update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand) {
         brandService.updateById(brand);
 
         return R.ok();
