@@ -1,15 +1,14 @@
 package com.mxj.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.mxj.gulimall.product.entity.CategoryBrandRelationEntity;
 import com.mxj.gulimall.product.service.CategoryBrandRelationService;
@@ -30,6 +29,30 @@ import com.mxj.common.utils.R;
 public class CategoryBrandRelationController {
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
+
+
+    /**
+     * 获取当前品牌分类关联
+     */
+    @GetMapping("/catelog/list")
+    //@RequiresPermissions("product:categorybrandrelation:list")
+    public R catelogList(@RequestParam("brandId") Long brandId){
+        LambdaQueryWrapper<CategoryBrandRelationEntity> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(CategoryBrandRelationEntity::getBrandId,brandId);
+        List<CategoryBrandRelationEntity> data = categoryBrandRelationService.list(wrapper);
+        return R.ok().put("data", data);
+    }
+
+    /**
+     * 保存当前品牌分类关联
+     */
+    @RequestMapping("/catelog/save")
+    //@RequiresPermissions("product:categorybrandrelation:list")
+    public R catelogSave(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
+
+        categoryBrandRelationService.saveDetail(categoryBrandRelation);
+        return R.ok();
+    }
 
     /**
      * 列表

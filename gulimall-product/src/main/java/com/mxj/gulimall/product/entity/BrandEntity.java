@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 
 import com.mxj.common.validator.ListValue;
+import com.mxj.common.validator.group.UpdateStatusGroup;
 import com.mxj.common.validator.group.AddGroup;
 import com.mxj.common.validator.group.UpdateGroup;
 import lombok.Data;
@@ -50,7 +51,8 @@ public class BrandEntity implements Serializable {
     /**
      * 显示状态[0-不显示；1-显示]
      */
-    @ListValue(vals = {0, 1},groups = {AddGroup.class})
+    @ListValue(vals = {0, 1},groups = {AddGroup.class, UpdateStatusGroup.class, UpdateGroup.class})
+    @NotNull(message = "显示状态不能为空", groups = {AddGroup.class, UpdateStatusGroup.class, UpdateGroup.class})
     private Integer showStatus;
     /**
      * 检索首字母
