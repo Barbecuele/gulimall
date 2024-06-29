@@ -31,20 +31,20 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
     @Override
     public PageUtils queryPage(Map<String, Object> params, Long catelogId) {
+        LambdaQueryWrapper<AttrGroupEntity> attrGroupEntityQueryWrapper = new LambdaQueryWrapper<>();
+        if (params.get("key") != null) {
+            attrGroupEntityQueryWrapper.like(AttrGroupEntity::getAttrGroupName, params.get("key"));
+        }
         if (catelogId == 0) {
             //查询全部
             IPage<AttrGroupEntity> page = this.page(
                     new Query<AttrGroupEntity>().getPage(params),
-                    new QueryWrapper<>()
+                    attrGroupEntityQueryWrapper
             );
             return new PageUtils(page);
         } else {
             //查询指定分类下的
-            LambdaQueryWrapper<AttrGroupEntity> attrGroupEntityQueryWrapper = new LambdaQueryWrapper<>();
             attrGroupEntityQueryWrapper.eq(AttrGroupEntity::getCatelogId, catelogId);
-            if (params.get("key") != null) {
-                attrGroupEntityQueryWrapper.like(AttrGroupEntity::getAttrGroupName, params.get("key"));
-            }
             IPage<AttrGroupEntity> page = this.page(
                     new Query<AttrGroupEntity>().getPage(params),
                     attrGroupEntityQueryWrapper

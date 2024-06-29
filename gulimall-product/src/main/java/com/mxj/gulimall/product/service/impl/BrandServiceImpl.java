@@ -16,6 +16,7 @@ import com.mxj.common.utils.Query;
 import com.mxj.gulimall.product.dao.BrandDao;
 import com.mxj.gulimall.product.entity.BrandEntity;
 import com.mxj.gulimall.product.service.BrandService;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("brandService")
@@ -39,6 +40,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
         return new PageUtils(page);
     }
 
+    @Transactional
     @Override
     public void updateDetail(BrandEntity brand) {
         //保存冗余数据一致
