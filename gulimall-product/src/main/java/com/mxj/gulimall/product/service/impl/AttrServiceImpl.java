@@ -5,6 +5,8 @@ import com.mxj.gulimall.product.dao.AttrAttrgroupRelationDao;
 import com.mxj.gulimall.product.dao.AttrGroupDao;
 import com.mxj.gulimall.product.dao.CategoryDao;
 import com.mxj.gulimall.product.entity.AttrAttrgroupRelationEntity;
+import com.mxj.gulimall.product.entity.AttrGroupEntity;
+import com.mxj.gulimall.product.entity.CategoryEntity;
 import com.mxj.gulimall.product.vo.AttrResponseVo;
 import com.mxj.gulimall.product.vo.AttrVo;
 import org.springframework.beans.BeanUtils;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -81,20 +84,25 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         );
         PageUtils pageUtils = new PageUtils(page);
         List<AttrEntity> records = page.getRecords();
-        records.stream()
+        List<AttrResponseVo> collect = records.stream()
                 .map(record -> {
                     AttrResponseVo attrResponseVo = new AttrResponseVo();
                     BeanUtils.copyProperties(record, attrResponseVo);
                     AttrAttrgroupRelationEntity attrAttrgroupRelationEntity = attrAttrgroupRelationDao.selectOne(
                             new LambdaQueryWrapper<AttrAttrgroupRelationEntity>()
-                            .eq(AttrAttrgroupRelationEntity::getAttrId, record.getAttrId()));
-                    Long attrGroupId = attrAttrgroupRelationEntity.getAttrGroupId();
-                    if (attrGroupId != null){
-                        attrResponseVo.setGroupName(attrGroupDao.selectById(attrGroupId).getAttrGroupName());
+                                    .eq(AttrAttrgroupRelationEntity::getAttrId, record.getAttrId()));
+                    if (attrAttrgroupRelationEntity != null) {
+                        AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(attrAttrgroupRelationEntity.getAttrGroupId());
+                        attrResponseVo.setGroupName(attrGroupEntity.getAttrGroupName());
                     }
-                    attrResponseVo.setCatelogName(categoryDao.selectById(record.getCatelogId()).getName());
+                    CategoryEntity categoryEntity = categoryDao.selectById(record.getCatelogId());
+                    if (categoryEntity != null) {
+                        attrResponseVo.setCatelogName(categoryEntity.getName());
+                    }
                     return attrResponseVo;
-                });
+                })
+                .collect(Collectors.toList());
+        pageUtils.setList(collect);
         return pageUtils;
     }
 
