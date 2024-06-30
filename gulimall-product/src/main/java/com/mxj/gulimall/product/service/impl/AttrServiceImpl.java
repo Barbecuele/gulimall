@@ -173,4 +173,33 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         }
     }
 
+    /**
+     * 根据属性组ID获取关联属性列表。
+     *
+     * @param attrGroupId 属性组的ID，用于查询关联的属性。
+     * @return 返回一个空的属性列表。
+     */
+    @Override
+    public List<AttrVo> getRelationAttr(Long attrGroupId) {
+        List<AttrAttrgroupRelationEntity> relationEntities = attrAttrgroupRelationDao.selectList(
+                new LambdaQueryWrapper<AttrAttrgroupRelationEntity>()
+                        .eq(AttrAttrgroupRelationEntity::getAttrGroupId, attrGroupId));
+        if (relationEntities != null && !relationEntities.isEmpty()) {
+            List<Long> attrIds = relationEntities.stream()
+                    .map(AttrAttrgroupRelationEntity::getAttrId)
+                    .collect(Collectors.toList());
+            if (!attrIds.isEmpty()) {
+                List<AttrEntity> attrEntities = (List<AttrEntity>)this.listByIds(attrIds);
+                if (attrEntities != null && !attrEntities.isEmpty()) {
+                    return attrEntities.stream().map(attrEntity -> {
+                        AttrVo attrVo = new AttrVo();
+                        BeanUtils.copyProperties(attrEntity, attrVo);
+                        return attrVo;
+                    }).collect(Collectors.toList());
+                }
+            }
+        }
+
+        return null;
+    }
 }

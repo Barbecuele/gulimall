@@ -1,10 +1,14 @@
 package com.mxj.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.mxj.gulimall.product.service.AttrService;
 import com.mxj.gulimall.product.service.CategoryService;
+import com.mxj.gulimall.product.vo.AttrGroupVo;
+import com.mxj.gulimall.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +33,16 @@ public class AttrGroupController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private AttrService attrService;
+
+    @RequestMapping("/{attrGroupId}/attr/relation")
+    public R attrRelation(@PathVariable("attrGroupId") Long attrGroupId) {
+        List<AttrVo> attrVos = attrService.getRelationAttr(attrGroupId);
+
+        return R.ok().put("data", attrVos);
+    }
 
     /**
      * 列表
@@ -82,11 +96,10 @@ public class AttrGroupController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
+    @RequestMapping("attr/relation/delete")
     //@RequiresPermissions("product:attrgroup:delete")
-    public R delete(@RequestBody Long[] attrGroupIds) {
-        attrGroupService.removeByIds(Arrays.asList(attrGroupIds));
-
+    public R delete(@RequestBody List<AttrGroupVo> attrGroupIds) {
+        attrGroupService.deleteRelation(attrGroupIds);
         return R.ok();
     }
 

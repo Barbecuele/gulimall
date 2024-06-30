@@ -3,7 +3,9 @@ package com.mxj.gulimall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mxj.common.utils.PageUtils;
 import com.mxj.gulimall.product.entity.AttrGroupEntity;
+import com.mxj.gulimall.product.vo.AttrGroupVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,5 +21,6 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
 
     PageUtils queryPage(Map<String, Object> params, Long catelogId);
 
+    void deleteRelation(List<AttrGroupVo> attrGroupIds);
 }
 

@@ -6,6 +6,7 @@ import com.mxj.gulimall.product.entity.AttrEntity;
 import com.mxj.gulimall.product.vo.AttrResponseVo;
 import com.mxj.gulimall.product.vo.AttrVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,5 +27,7 @@ public interface AttrService extends IService<AttrEntity> {
     AttrResponseVo getAttrInfo(Long attrId);
 
     void updateAttr(AttrVo attr);
+
+    List<AttrVo> getRelationAttr(Long attrGroupId);
 }
 
